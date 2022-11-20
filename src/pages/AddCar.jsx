@@ -33,10 +33,10 @@ const AddCar = () => {
         setNewCar({ ...newCar, max_speed: e.target.value })
     }
     const isAutomaticHandler = (e) => {
-        setNewCar({ ...newCar, is_automatic: e.target.value= true  })
+        setNewCar({ ...newCar, is_automatic: e.target.value = true })
     }
     const engineHandler = (e) => {
-        setNewCar({ ...newCar, engine: e.target.value})
+        setNewCar({ ...newCar, engine: e.target.value })
     }
     const numberOfDoorsHandler = (e) => {
         setNewCar({ ...newCar, number_of_doors: e.target.value })
@@ -46,6 +46,29 @@ const AddCar = () => {
         e.preventDefault();
         await CarsService.add(newCar);
         history.push("/cars")
+    }
+    const resetHandler = () => {
+       setNewCar({
+        brand: "",
+        model: "",
+        year: "",
+        max_speed: "",
+        is_automatic: false,
+        engine: null,
+        number_of_doors: ""
+       })
+    }
+    const previewHandler = () => {
+        const transmition = (!newCar.is_automatic) ? 'manual transmision' : 'automatic transmision'
+        alert(`
+            Car brand: ${newCar.brand}
+            Car model: ${newCar.model}
+            Year of production: ${newCar.year}
+            Cars maximum speed is ${newCar.max_speed} km/h
+            Number of doors: ${newCar.number_of_doors}
+            The car has ${transmition}
+            Engine type: ${newCar.engine}
+        `)
     }
     return (
         <div>
@@ -78,7 +101,7 @@ const AddCar = () => {
                 </select>
                 <label>Enter cars max speed</label>
                 <input
-                    type="text"
+                    type="number"
                     value={newCar.max_speed}
                     onChange={maxSpeedHandler}
                 />
@@ -110,11 +133,13 @@ const AddCar = () => {
                 </label>
                 <label>Enter cars door number</label>
                 <input
-                    type="text"
+                    type="number"
                     value={newCar.number_of_doors}
                     onChange={numberOfDoorsHandler}
                 />
                 <button type='submit'>Submit</button>
+                <button type='button' onClick={resetHandler}>Reset</button>
+                <button type='button' onClick={previewHandler}>Previev</button>
             </form>
         </div>
     )
