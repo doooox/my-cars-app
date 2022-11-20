@@ -15,7 +15,7 @@ const AppCars = () => {
         <div>
             <h1>Cars</h1>
             {
-                cars.map((car) => <li>{car.brand}</li>)
+                cars.map((car) => <li key={car.id}>{car.brand}</li>)
             }
         </div>
     )

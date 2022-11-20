@@ -12,6 +12,11 @@ const Layout = () => {
                         Cars
                     </Link>
                 </li>
+                <li>
+                    <Link to="/add">
+                        Add car
+                    </Link>
+                </li>
             </ul>
         </nav>
         <Routes/>
