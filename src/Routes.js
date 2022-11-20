@@ -13,6 +13,9 @@ const Routes = () => {
         <Route path="/add">
           <AddCar />
         </Route>
+        <Route path="/edit/:id">
+          <AddCar />
+        </Route>
       </Switch>
     </div>
   );

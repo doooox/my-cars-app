@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react'
+import { Link } from 'react-router-dom';
 import CarsService from '../services/CarsService';
 
 const AppCars = () => {
     const [cars, setCar] = useState([]);
     const getCars = async () => {
         const carsData = await CarsService.getAll();
-        console.log(carsData);
         setCar(carsData)
     }
     useEffect(() => {
@@ -15,7 +15,12 @@ const AppCars = () => {
         <div>
             <h1>Cars</h1>
             {
-                cars.map((car) => <li key={car.id}>{car.brand}</li>)
+                cars.map((car) => <div key={car.id}>
+                    <h1>{car.brand}</h1>
+                    <Link to={`/edit/${car.id}`}>
+                        <button className="btn btn-warning">Edit</button>
+                    </Link>
+                </div>)
             }
         </div>
     )

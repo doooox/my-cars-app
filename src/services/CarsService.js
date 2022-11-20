@@ -10,6 +10,15 @@ class CarsService extends ApiService {
     }
     return [];
   }
+  async getCar(id) {
+    try {
+      const response = await this.client.get(`/cars/${id}`);
+      return response.data;
+    } catch (error) {
+      console.log("Something went wrong", error);
+    }
+    return [];
+  }
   async add(car) {
     try {
       const response = this.client.post("/cars", car);
@@ -19,5 +28,14 @@ class CarsService extends ApiService {
     }
     return [];
   }
+  async edit(id, car) {
+    try {
+      const response = await this.client.put(`/cars/${id}`, car);
+      return response;
+    } catch (error) {
+      console.log("Something went wrong", error);
+    }
+  }
 }
+
 export default new CarsService();

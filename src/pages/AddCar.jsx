@@ -1,6 +1,6 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import CarsService from '../services/CarsService';
-import { useHistory } from 'react-router-dom';
+import { useHistory, useParams } from 'react-router-dom';
 
 
 const AddCar = () => {
@@ -13,7 +13,8 @@ const AddCar = () => {
         engine: null,
         number_of_doors: ""
     })
-    let history = useHistory()
+    let { id } = useParams();
+    let history = useHistory();
     const years = () => {
         let arr = [];
         for (let i = 1990; i <= 2018; i++) arr.push(i);
@@ -42,21 +43,37 @@ const AddCar = () => {
         setNewCar({ ...newCar, number_of_doors: e.target.value })
     }
 
+    const getSingleCar = async () => {
+        if (id) {
+            const getSingleCarData = await CarsService.getCar(id)
+            setNewCar(getSingleCarData)
+        }
+    }
+
+    useEffect(() => {
+        getSingleCar();
+    }, []);
+
     const submitHandler = async (e) => {
         e.preventDefault();
-        await CarsService.add(newCar);
+        if (!id) {
+            await CarsService.add(newCar);
+        } else {
+            const carData = await CarsService.edit(id, newCar);
+            setNewCar(carData);
+        }
         history.push("/cars")
     }
     const resetHandler = () => {
-       setNewCar({
-        brand: "",
-        model: "",
-        year: "",
-        max_speed: "",
-        is_automatic: false,
-        engine: null,
-        number_of_doors: ""
-       })
+        setNewCar({
+            brand: "",
+            model: "",
+            year: "",
+            max_speed: "",
+            is_automatic: false,
+            engine: null,
+            number_of_doors: ""
+        })
     }
     const previewHandler = () => {
         const transmition = (!newCar.is_automatic) ? 'manual transmision' : 'automatic transmision'
