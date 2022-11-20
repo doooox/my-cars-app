@@ -36,6 +36,14 @@ class CarsService extends ApiService {
       console.log("Something went wrong", error);
     }
   }
+  async delete(id){
+    try{
+      const response = await this.client.delete(`cars/${id}`);
+      return response.data;
+    }catch(error){
+      console.log("Something went wrong", error);
+    }
+  }
 }
 
 export default new CarsService();
